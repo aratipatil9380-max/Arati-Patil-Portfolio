@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arati Patil — CSBS Student | Python & AI Enthusiast</title>
+<meta name="description" content="Portfolio of Arati Patil, a Computer Science & Business Systems student exploring Python, AI, software development, web technologies, research and emerging technologies.">
+<meta property="og:title" content="Arati Patil — CSBS Student | Python & AI Enthusiast">
+<meta property="og:description" content="Projects, hackathons and community work from a first-year CSBS student at VTU Belagavi.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23232323'/><path d='M8 24 16 7l8 17M11 19h10' stroke='%23e8a0b8' stroke-width='2.4' fill='none'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ef;--fg:#1d1d1f;--mut:#5f5e5a;--line:#d9d6cd;--acc:#7a1f3d;--panel:#ebe8e0;
+--serif:"Fraunces",Georgia,"Times New Roman",serif;--sans:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171716;--fg:#ecebe6;--mut:#a3a199;--line:#33322f;--acc:#e8a0b8;--panel:#212120}}
+:root[data-theme="dark"]{--bg:#171716;--fg:#ecebe6;--mut:#a3a199;--line:#33322f;--acc:#e8a0b8;--panel:#212120}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 1.0625rem/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip;min-width:0}
+h1,h2,h3{text-wrap:balance;overflow-wrap:break-word}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--fg);color:var(--bg);padding:8px 14px;z-index:99}.skip:focus{left:8px}
+/* nav */
+header{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+header.s{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;transition:height .3s}
+header.s .nav{height:56px}
+.brand{font-weight:600;letter-spacing:.12em;font-size:.82rem;text-decoration:none}
+.links{display:flex;gap:28px;align-items:center;font-size:.92rem}
+.links a,.u{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .3s}
+.links a:hover,.u:hover{background-size:100% 1px}
+.links .sep{width:1px;height:16px;background:var(--line)}
+.menu{display:none;background:none;border:1px solid var(--line);color:var(--fg);font:inherit;font-size:.85rem;padding:10px 16px;min-height:44px;border-radius:99px;cursor:pointer}
+@media(max-width:780px){.menu{display:block}.links{position:fixed;inset:56px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px clamp(20px,5vw,48px) 20px;display:none;font-size:1.15rem}
+.links.o{display:flex}.links a{padding:12px 0;width:100%}.links .sep{display:none}}
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:flex-end;position:relative;padding:112px 0 40px;overflow:hidden;overflow:clip;scroll-margin-top:0}
+.grid-art{position:absolute;right:0;top:12%;width:min(52vw,560px);opacity:.9;pointer-events:none}
+.grid-art line.g{stroke:var(--line);stroke-width:1}
+.grid-art .curve{stroke:var(--acc);stroke-width:1.4;fill:none;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 3.2s .3s ease forwards}
+.grid-art .n{fill:var(--acc)}
+.grid-art text{font:10px var(--mono);fill:var(--mut)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.meta{font:500 .8rem var(--mono);color:var(--mut);letter-spacing:.04em}
+h1{font:300 clamp(4.2rem,17vw,12.5rem)/.86 var(--serif);letter-spacing:-.04em;margin:18px 0 28px;font-variation-settings:"opsz" 144}
+h1 em{font-style:italic;margin-left:.12em}
+.role{font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:500;margin:0 0 12px}
+.lede{max-width:52ch;color:var(--mut);margin:0 0 32px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid var(--fg);border-radius:99px;text-decoration:none;font-weight:500;font-size:.95rem;transition:background .2s,color .2s}
+.btn.p{background:var(--fg);color:var(--bg)}.btn:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+.signal{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;border-top:1px solid var(--line)}
+.signal div{padding:18px 20px 0 0}
+.signal b{display:block;font:400 1.3rem/1.2 var(--serif)}.signal span{font-size:.85rem;color:var(--mut)}
+@media(max-width:480px){.btns{gap:10px}.btn{flex:1 1 calc(50% - 5px);justify-content:center;padding:0 14px}.btn.p{flex-basis:100%}}
+@media(max-width:700px){.signal{grid-template-columns:1fr;margin-top:48px}.signal div{padding:14px 0;border-bottom:1px solid var(--line)}.grid-art{width:80vw;top:9%;opacity:.55}}
+/* sections */
+section{padding:clamp(56px,8vw,110px) 0;border-top:1px solid var(--line);scroll-margin-top:56px}
+@media(max-width:780px){section{scroll-margin-top:64px}.nav,header.s .nav{height:60px}.links{top:calc(60px + env(safe-area-inset-top,0px))!important}}
+.sh{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:clamp(32px,5vw,56px)}
+h2{font:300 clamp(2.2rem,5.5vw,4.2rem)/1.05 var(--serif);letter-spacing:-.025em;margin:0}
+.sub{color:var(--mut);margin:14px 0 0;max-width:46ch}
+/* projects */
+.proj{min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(32px,5vw,64px) 0;border-top:1px solid var(--line)}
+.proj.r .vis{order:2}
+.vis{aspect-ratio:4/3;background:var(--panel);border-radius:4px;position:relative;overflow:hidden;display:grid;place-items:center;padding:20px}
+.vis .big{position:relative;max-width:100%;font:300 clamp(2.4rem,6.5vw,5rem)/1.05 var(--serif);letter-spacing:-.04em;opacity:.9;text-align:center}
+.vis .cap{position:absolute;left:16px;bottom:12px;font:.72rem var(--mono);color:var(--mut)}
+.vis svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.vis svg *{stroke:var(--acc);fill:none;stroke-width:1}
+.proj.f{grid-template-columns:1fr}.proj.f .vis{aspect-ratio:21/8}
+.proj.s{grid-template-columns:200px 1fr 1fr;gap:12px 24px;padding:28px 0;align-items:start}
+.proj.s h3{font-size:1.5rem}
+@media(max-width:1000px){.proj.s{grid-template-columns:1fr 1fr}.proj.s>div:first-child{grid-column:1/-1}}
+@media(max-width:780px){.proj,.proj.s{grid-template-columns:1fr;gap:20px}.proj.r .vis{order:0}.proj.s{gap:8px}}
+h3{font:400 clamp(1.8rem,3.4vw,2.6rem)/1.1 var(--serif);letter-spacing:-.02em;margin:6px 0 14px}
+.cat{font:500 .78rem var(--mono);color:var(--acc)}
+.proj>div{min-width:0}.proj p{margin:0 0 16px;max-width:54ch}
+.ctx{font-size:.92rem;border-left:2px solid var(--acc);padding-left:12px;margin-bottom:16px!important}
+.tags{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-wrap:wrap;gap:6px 8px}
+.tags li{font:.74rem var(--mono);color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:3px 10px}
+.pl{display:flex;flex-wrap:wrap;gap:8px 22px;font-weight:500;font-size:.95rem}.pl a{color:var(--acc)}
+.pl .tbd{color:var(--mut);font-weight:400}
+/* nasa */
+.nasa{background:var(--fg);color:var(--bg);border-top:0}
+.nasa .meta,.nasa .sub{color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.nasa h2{font-size:clamp(3rem,10vw,8rem);line-height:.92}
+.nasa p{max-width:56ch}
+.nasa .cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px;padding-top:28px;border-top:1px solid color-mix(in srgb,var(--bg) 25%,transparent)}
+@media(max-width:700px){.nasa .cols{grid-template-columns:1fr;gap:12px}}
+/* timeline & lists */
+.tl{display:grid;grid-template-columns:200px 1fr;gap:8px 24px;padding:28px 0;border-top:1px solid var(--line)}
+.tl h3{font-size:1.5rem;margin:0 0 8px}.tl p{margin:0 0 8px;color:var(--mut);max-width:62ch}
+.tl .d{font:.8rem var(--mono);color:var(--mut)}
+.tl ul{margin:6px 0 0;padding-left:18px;color:var(--mut)}
+@media(max-width:700px){.tl{grid-template-columns:1fr}}
+.ach{list-style:none;margin:0;padding:0}
+.ach li{display:grid;grid-template-columns:90px 1fr auto;gap:16px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.ach b{font:400 1.45rem/1.25 var(--serif)}.ach small{color:var(--mut);display:block;font-size:.9rem}
+.ach .y{font:.8rem var(--mono);color:var(--mut)}
+@media(max-width:700px){.ach li{grid-template-columns:1fr;gap:2px}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,90px)}
+@media(max-width:780px){.two{grid-template-columns:1fr}}
+.about p{max-width:58ch;margin:0 0 18px}
+.sk dt{font:.78rem var(--mono);color:var(--acc);margin-top:18px}.sk dd{margin:2px 0 0;font:300 1.3rem/1.4 var(--serif)}
+.note{font-size:.88rem;color:var(--mut);margin-top:18px}
+.edu div{padding:16px 0;border-top:1px solid var(--line)}.edu b{font-weight:600}
+/* beyond */
+.beyond{background:var(--panel)}
+.beyond blockquote{font:italic 300 clamp(1.8rem,4.6vw,3.4rem)/1.2 var(--serif);margin:0 0 32px;letter-spacing:-.02em;max-width:22ch}
+.scribble{width:120px;margin-top:24px}.scribble path{stroke:var(--acc);fill:none;stroke-width:1.6;stroke-linecap:round}
+.chips{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.chips li{border:1px solid var(--fg);border-radius:99px;padding:4px 14px;font-size:.9rem}
+/* contact */
+.contact h2{font-size:clamp(2.8rem,9vw,7rem);line-height:.95}
+.mail{display:inline-block;font:300 clamp(1.4rem,4vw,2.6rem) var(--serif);margin:32px 0 28px;word-break:break-word}
+footer{border-top:1px solid var(--line);padding:32px 0 40px;font-size:.88rem;color:var(--mut)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+footer nav{display:flex;gap:20px}
+/* reveal: only the hero lines and work rows, subtle */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}.grid-art .curve{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header id="hd"><div class="wrap nav">
+<a class="brand" href="#home">ARATI PATIL</a>
+<button class="menu" id="mb" aria-expanded="false" aria-controls="lk">Menu</button>
+<nav class="links" id="lk" aria-label="Primary">
+<a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a><span class="sep" aria-hidden="true"></span>
+<a href="https://github.com/aratipatil9380-max" rel="noopener" target="_blank">GitHub</a>
+</nav></div></header>
+
+<main id="main">
+<section class="hero" id="home" style="border-top:0">
+<svg class="grid-art" viewBox="0 0 400 400" aria-hidden="true">
+<g><line class="g" x1="0" y1="100" x2="400" y2="100"/><line class="g" x1="0" y1="200" x2="400" y2="200"/><line class="g" x1="0" y1="300" x2="400" y2="300"/>
+<line class="g" x1="100" y1="0" x2="100" y2="400"/><line class="g" x1="200" y1="0" x2="200" y2="400"/><line class="g" x1="300" y1="0" x2="300" y2="400"/></g>
+<path class="curve" d="M0 330 C90 330 120 80 200 200 S320 330 400 70"/>
+<circle class="n" cx="200" cy="200" r="3.5"/><circle class="n" cx="100" cy="228" r="2.5"/><circle class="n" cx="300" cy="258" r="2.5"/>
+<text x="206" y="192">(x, y)</text><text x="4" y="394">0</text><text x="372" y="394">n</text>
+</svg>
+<div class="wrap" style="position:relative">
+<p class="meta">B.Tech CSBS · VTU Belagavi</p>
+<h1>Arati<br><em>Patil</em></h1>
+<p class="role">CSBS Student | Python &amp; AI Enthusiast</p>
+<p class="lede">Exploring software development, AI, web technologies, research, and emerging technologies through projects, hackathons, and hands-on learning.</p>
+<div class="btns"><a class="btn p" href="#work">View my work</a><a class="btn" href="https://github.com/aratipatil9380-max" target="_blank" rel="noopener">GitHub</a><a class="btn" href="mailto:aratipatil9380@gmail.com">Email</a></div>
+<div class="signal">
+<div><b>Galactic Champion</b><span>NASA Space Apps Challenge 2025 · Belagavi Local Event</span></div>
+<div><b>Global Nominee</b><span>NASA Space Apps Challenge 2025</span></div>
+<div><b>3rd Prize</b><span>RSA Cryptography · National Mathematics Day</span></div>
+</div></div></section>
+
+<section id="work"><div class="wrap">
+<div class="sh"><span class="meta">01 — Work</span><div><h2>Selected work</h2><p class="sub">Projects where curiosity became something tangible.</p></div></div>
+<div id="projects"></div>
+<h3 style="margin-top:72px">Collaborative work</h3><p class="sub" style="margin:0 0 24px">Team projects. I contributed as part of the team; none of these are solo work.</p><div id="collab" style="border-bottom:1px solid var(--line)"></div>
+</div></section>
+
+<section id="experience"><div class="wrap">
+<div class="sh"><span class="meta">02 — Experience</span><div><h2>Community &amp; experience</h2></div></div>
+<div class="tl"><div class="d">Oct 2025 – Present</div><div><h3>VTU Quantum Club</h3><p>Member · Workshop Lead · Technical Community Contributor. A learner and community participant in quantum computing, including Qiskit-related activities.</p><ul><li>Workshop organisation and technical event involvement</li><li>Student engagement and quantum computing exploration</li></ul></div></div>
+<div class="tl"><div class="d">National Quantum Summit</div><div><h3>Technical Committee · Workshop Lead</h3><p>Technical event coordination.</p><ul><li>Planning and execution</li><li>Workshop involvement and student engagement</li></ul></div></div>
+<div class="tl"><div class="d">Smart India Hackathon</div><div><h3>Technical Committee · Team involvement</h3><ul><li>Documentation, research and presentation</li><li>Testing, technical coordination and team support</li></ul></div></div>
+</div></section>
+
+<section id="achievements"><div class="wrap">
+<div class="sh"><span class="meta">03 — Achievements</span><div><h2>Achievements</h2></div></div>
+<ol class="ach">
+<li><span class="y">01</span><span><b style="font-size:2rem">Overall Winner — Galactic Champion</b><small>NASA Space Apps Challenge 2025 · Belagavi Local Event · also Global Nominee</small></span></li>
+<li><span class="y">02</span><span><b>4th Place — Team Phantom Syndicate</b><small>Smart India Hackathon · internal round</small></span></li>
+<li><span class="y">03</span><span><b>3rd Prize — RSA Cryptography</b><small>National Mathematics Day · university-level model presentation / exhibition</small></span></li>
+</ol></div></section>
+
+<section id="about"><div class="wrap">
+<div class="sh"><span class="meta">04 — About</span><div><h2>Curious by default.</h2></div></div>
+<div class="two">
+<div class="about"><p>Arati is a Computer Science &amp; Business Systems student at Visvesvaraya Technological University, Belagavi. She likes turning ideas into projects and learns best through hackathons, research, technical communities and hands-on experiments.</p>
+<p>Her interests currently span Python, software development, AI and GenAI, frontend development, research, quantum computing and emerging technologies.</p>
+<p>She is still exploring where technology will take her, and enjoys finding out.</p>
+<dl class="sk" aria-label="Tools and technologies explored">
+<dt>PROGRAMMING</dt><dd>Python, C, JavaScript</dd>
+<dt>WEB</dt><dd>HTML, CSS, frontend development</dd>
+<dt>AI &amp; EXPLORATION</dt><dd>AI tools, prompt engineering, GenAI</dd>
+<dt>TOOLS</dt><dd>GitHub, Firebase, Vercel, Netlify, Google Cloud, Figma, Canva, Adobe Creative Cloud</dd></dl>
+<p class="note">Technologies explored, not necessarily core strengths: Next.js, Node.js, Supabase, NumPy, Arduino and Notion.</p></div>
+<div class="edu"><span class="meta">Education</span>
+<div style="margin-top:12px"><b>Visvesvaraya Technological University, Belagavi</b><br>B.Tech, Computer Science &amp; Business Systems<br><span class="meta">Expected 2029 · CGPA 8.05/10</span></div>
+<div><b>Govindram Seksaria Science College, Belagavi</b><br>PU, Science<br><span class="meta">80%</span></div>
+<span class="meta" style="display:block;margin-top:28px">Certifications &amp; learning</span>
+<div style="margin-top:12px"><b>AI Tools Workshop</b><br>United Latino Students Association / be10x<br><span class="meta">Feb 2026</span></div>
+<div><b>Build with AI — The Google Cloud Labyrinth</b><br>GDGoC VTU Belagavi<br><span class="meta">May 2026</span></div>
+</div></div></div></section>
+
+<section class="beyond" id="beyond"><div class="wrap">
+<div class="sh"><span class="meta">05 — Beyond Tech</span><div><h2>Beyond tech</h2></div></div>
+<blockquote>Technology is one side of my curiosity. Art, drawing and theatre are another.</blockquote>
+<div class="two"><p style="max-width:50ch;margin:0">From sketching to acting and street plays, creative work gives me a different way to communicate ideas, collaborate with people, and step outside the screen.</p>
+<div><p style="margin:0;max-width:50ch">Street theatre (Nukkad Natak) performances have taken me to Belagavi, Bengaluru and Acharya University.</p>
+<ul class="chips" aria-label="Creative interests"><li>Art</li><li>Drawing</li><li>Acting</li><li>Drama</li><li>Street theatre</li></ul>
+<svg class="scribble" viewBox="0 0 120 40" aria-hidden="true"><path d="M4 28C18 6 30 6 36 22s16 14 24-4 20-14 26 2 18 6 30-8"/></svg></div></div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+<div class="sh"><span class="meta">06 — Contact</span><div><h2>Let’s connect</h2><p class="sub">Have an opportunity, idea, project, or simply want to talk technology?</p></div></div>
+<a class="mail u" href="mailto:aratipatil9380@gmail.com">aratipatil9380@gmail.com</a>
+<div class="btns"><a class="btn" href="https://github.com/aratipatil9380-max" target="_blank" rel="noopener">GitHub</a></div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><div><b style="color:var(--fg);letter-spacing:.1em">ARATI PATIL</b><br>CSBS · VTU Belagavi<br>© 2026 Arati Patil</div>
+<nav aria-label="Footer"><a class="u" href="https://github.com/aratipatil9380-max" target="_blank" rel="noopener">GitHub</a><a class="u" href="mailto:aratipatil9380@gmail.com">Email</a></nav></div></footer>
+
+<script>
+/* ---- Content config: add projects here. Leave live: "" if no confirmed URL. ---- */
+var ORBIT='<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><ellipse cx="100" cy="75" rx="80" ry="30" transform="rotate(-18 100 75)"/><ellipse cx="100" cy="75" rx="52" ry="52"/><circle cx="168" cy="52" r="4"/><path d="M100 0v150M0 75h200"/></svg>';
+var MATH='<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M0 120h200M20 0v150"/><path d="M20 120C60 118 90 90 110 50s50-40 90-44"/></svg>';
+var PROJECTS=[
+{title:"EPIVET",layout:"",category:"Veterinary Epidemiology & Disease Surveillance Platform · Prototype",visual:"EPIVET",caption:"prototype",
+ description:"A web-based platform concept for veterinary disease surveillance, outbreak monitoring and livestock health management: outbreak mapping, severity tracking, disease information, vaccination management, reporting, analytics, CSV export, weather information and veterinary resources.",
+ achievement:"My part: prototype development, testing, validating functionality, checking user flows, identifying issues and supporting integration of major modules.",
+ technologies:["HTML","CSS","JavaScript"],github:"https://github.com/aratipatil9380-max/Epivet",live:"https://aratipatil9380-max.github.io/Epivet/"},
+{title:"RSA Cryptography",layout:"r",category:"Interactive cryptography learning experience",visual:"p·q → n",caption:"mathematics → cryptography",svg:MATH,
+ description:"An educational interactive web project exploring prime numbers, modular arithmetic, GCD, Euler’s totient, public/private keys, RSA key generation, encryption and decryption, and the Hill Cipher.",
+ achievement:"3rd Prize, university-level model presentation / exhibition, National Mathematics Day",
+ technologies:["HTML","CSS","JavaScript"],github:"https://github.com/aratipatil9380-max/cryptography-rsa",live:"https://cryptography-rsa.vercel.app/"},
+{title:"Your Home in Space",layout:"",category:"NASA Space Apps Challenge 2025 · Team achievement",visual:"Galactic Champion",caption:"Belagavi local event",svg:ORBIT,
+ description:"Our first-year student team developed a game-based simulation for spacecraft and space-station habitat layout planning under the theme “Your Home in Space.”",
+ achievement:"Overall Winner, Galactic Champion, Belagavi local event · Global Nominee · ₹25,000 team prize",
+ technologies:["Game-based simulation","Team project"],github:"",live:""},
+{collab:1,title:"Legacy Code Whisperer",category:"IBM Bob 2.0 hackathon · Core team member",
+ description:"A team project on modernising legacy code. I contributed research, testing and presentation, alongside collaborative project development.",
+ technologies:["Team project"],github:"https://github.com/the-nidhi-bhat/Codexmatrix-IBM-Bob-Hackathon"},
+{collab:1,title:"MPLADS Sentinel",category:"Smart India Hackathon · Team project",
+ description:"A collaborative technical project on prioritising MPLADS projects for review. I contributed research, PPT, documentation, presenter support, testing and technical coordination.",
+ technologies:["Team project"],github:"https://github.com/the-nidhi-bhat/mplads-sentinel"},
+{collab:1,title:"CodexMatrix",category:"Developer learning & productivity platform · Team project",
+ description:"Collaborative work on a platform for personalised learning tracks and structured challenges. I participated as part of the team.",
+ technologies:["Team project"],github:"https://github.com/nidzzgotnochill/codexmatrix-redesign-abtalks"}
+];
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+PROJECTS.forEach(function(p){
+ var tags=p.technologies.map(function(t){return "<li>"+esc(t)+"</li>"}).join("");
+ var links='<div class="pl">'+(p.live?'<a href="'+p.live+'" target="_blank" rel="noopener">Live project ↗<span style="position:absolute;left:-999px"> '+esc(p.title)+'</span></a>':'')+(p.github?'<a href="'+p.github+'" target="_blank" rel="noopener">GitHub ↗<span style="position:absolute;left:-999px"> '+esc(p.title)+'</span></a>':'')+'</div>';
+ var d=document.createElement("article");
+ if(p.collab){d.className="proj s";d.innerHTML='<div><span class="cat">'+esc(p.category)+'</span></div><div><h3>'+esc(p.title)+'</h3><p>'+esc(p.description)+'</p></div><div><ul class="tags" aria-label="Type">'+tags+'</ul>'+links+'</div>';document.getElementById("collab").appendChild(d);return}
+ d.className="proj rv "+p.layout;
+ d.innerHTML='<div class="vis" role="img" aria-label="Typographic panel for '+esc(p.title)+'">'+(p.svg||"")+'<span class="big">'+esc(p.visual)+'</span><span class="cap">'+esc(p.caption)+'</span></div><div><span class="cat">'+esc(p.category)+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.description)+'</p>'+(p.achievement?'<p class="ctx">'+esc(p.achievement)+'</p>':'')+'<ul class="tags" aria-label="Technologies">'+tags+'</ul>'+links+'</div>';
+ document.getElementById("projects").appendChild(d)});
+/* nav */
+var hd=document.getElementById("hd"),mb=document.getElementById("mb"),lk=document.getElementById("lk");
+addEventListener("scroll",function(){hd.classList.toggle("s",scrollY>24)},{passive:true});
+mb.addEventListener("click",function(){var o=lk.classList.toggle("o");mb.setAttribute("aria-expanded",o)});
+lk.addEventListener("click",function(e){if(e.target.tagName==="A"){lk.classList.remove("o");mb.setAttribute("aria-expanded","false")}});
+/* reveal work rows only */
+if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12});
+ document.querySelectorAll(".rv").forEach(function(n){io.observe(n)})}else{document.querySelectorAll(".rv").forEach(function(n){n.classList.add("in")})}
+</script>
+</body>
+</html>
