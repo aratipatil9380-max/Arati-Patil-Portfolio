@@ -15,6 +15,13 @@ import { useGsap } from '../../motion/useGsap';
 /** Two identical groups make the translateX(-50%) loop seamless. */
 const copies = [0, 1];
 
+/**
+ * Repeat the concept inside each group so a single group is wider than any
+ * common viewport. One 3-word group is only ~670px, which would leave a gap on
+ * wide screens once the translateX(-50%) loop has scrolled past it.
+ */
+const words = Array.from({ length: 6 }, () => profile.concept).flat();
+
 export function Marquee() {
   const ref = useGsap<HTMLDivElement>(({ scope, mm }) => {
     mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -44,8 +51,8 @@ export function Marquee() {
         <div className="marquee__track">
           {copies.map((copy) => (
             <ul className="marquee__group" key={copy}>
-              {profile.concept.map((word) => (
-                <li className="marquee__item" key={word}>
+              {words.map((word, i) => (
+                <li className="marquee__item" key={`${word}-${i}`}>
                   <span className="marquee__word">{word}</span>
                   <span className="marquee__dot" />
                 </li>

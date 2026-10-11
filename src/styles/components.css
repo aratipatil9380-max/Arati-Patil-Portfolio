@@ -1274,7 +1274,9 @@
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 36s linear infinite;
+/* Duration keeps the same ambient speed (~18px/s) now that each group repeats
+   the phrase 6x: distance per loop grew from ~670px to ~4000px. */
+  animation: marquee-scroll 216s linear infinite;
 }
 
 .marquee__group {
