@@ -1,0 +1,65 @@
+/* Small set of reusable layout/typography helpers. Kept intentionally tiny —
+   component-level styling belongs with components, not here. */
+
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--wide {
+  max-width: var(--content-wide);
+}
+
+.section {
+  padding-block: clamp(4rem, 10vw, 8rem);
+  /* Anchor offset is handled once by html { scroll-padding-top } in base.css;
+     adding scroll-margin here would double the offset. */
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* Keyboard-only skip link. */
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: calc(-1 * var(--space-16));
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius-sm);
+  font-weight: var(--fw-semibold);
+  transition: top var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
