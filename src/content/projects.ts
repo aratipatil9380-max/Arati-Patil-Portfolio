@@ -1,8 +1,7 @@
 /**
  * Project facts. Only projects with a verifiable public link or a clearly
- * labelled team context are listed. Collaborative projects owned by other
- * accounts (MPLADS Sentinel, Legacy Code Whisperer, CodexMatrix) are
- * intentionally excluded until ownership/contribution is confirmed.
+ * labelled team context are listed. Collaborative projects list their shared
+ * repo and name the team; each entry's `contribution` states Arati's role.
  */
 export type Project = {
   id: string;
@@ -65,6 +64,55 @@ export const projects: readonly Project[] = [
     imageAlt:
       'RSA Cryptography site — an interactive explainer interface for cryptography ' +
       'concepts.',
+    featured: true,
+  },
+  {
+    id: 'legacy-code-whisperer',
+    name: 'Legacy Code Whisperer',
+    ownership: 'team',
+    context: 'IBM Bob 2.0 Hackathon · Team Codexmatrix',
+    category: 'AI Developer Tool',
+    summary:
+      'An AI-assisted developer tool that helps teams understand and modernize ' +
+      'legacy codebases with poor documentation — explaining code and pointing at ' +
+      'modernization paths.',
+    contribution: 'Team lead / builder.',
+    tags: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'AI/LLM Integration'],
+    live: 'https://legacy-code-whisperer-mu.vercel.app/',
+    repo: 'https://github.com/the-nidhi-bhat/Codexmatrix-IBM-Bob-Hackathon',
+    image: '/projects/legacy-code-whisperer.webp',
+    imageAlt:
+      'Legacy Code Whisperer web app — a code-analysis workspace with the headline ' +
+      '“Modernize legacy code without breaking what works”, built by Team Codexmatrix ' +
+      'for the IBM Bob 2.0 Hackathon.',
+    featured: true,
+  },
+  {
+    id: 'mplads-sentinel',
+    name: 'MPLADS Sentinel',
+    ownership: 'team',
+    context: 'Smart India Hackathon 2026 · Team Phantom Syndicate',
+    category: 'Explainable audit platform',
+    summary:
+      'An explainable ML platform that helps audit agencies prioritise which MPLADS ' +
+      'projects warrant human review, combining anomaly signals into a transparent ' +
+      'audit-priority score.',
+    contribution: 'Presenter — Team Phantom Syndicate.',
+    tags: [
+      'Python',
+      'FastAPI',
+      'pandas',
+      'scikit-learn',
+      'PostgreSQL',
+      'SQLAlchemy',
+      'Next.js',
+      'TypeScript',
+    ],
+    repo: 'https://github.com/the-nidhi-bhat/mplads-sentinel',
+    image: '/projects/mplads-sentinel.webp',
+    imageAlt:
+      'MPLADS Sentinel audit dashboard — KPI summary cards, risk and anomaly charts, ' +
+      'filters, and a prioritised queue of public-works projects for human review.',
     featured: true,
   },
   {

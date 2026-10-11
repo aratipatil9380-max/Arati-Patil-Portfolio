@@ -48,11 +48,13 @@ export const achievements: readonly Achievement[] = [
   },
   {
     id: 'sih-internal-round',
-    event: 'Smart India Hackathon — internal round',
-    title: 'Team Phantom Syndicate',
+    event: 'Smart India Hackathon 2026 — internal round',
+    title: 'MPLADS Sentinel · Team Phantom Syndicate',
     scope: 'team',
-    detail: 'Took part in the internal round with team Phantom Syndicate.',
-    period: '2025',
+    detail:
+      'Built MPLADS Sentinel — an explainable audit-priority platform for public ' +
+      'works — with team Phantom Syndicate and cleared the internal round.',
+    period: '2026',
     tier: 'minor',
   },
 ];
