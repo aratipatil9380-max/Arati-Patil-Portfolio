@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Arati Patil — Build. Lead. Create.">
+  <rect width="1200" height="630" fill="#0A0B0D" />
+  <rect x="64" y="64" width="1072" height="502" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" />
+  <text x="96" y="150" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="4" fill="#9AA1A9">
+    CSBS STUDENT · DEVELOPER · COMMUNITY BUILDER
+  </text>
+  <text x="96" y="330" font-family="Arial, Helvetica, sans-serif" font-size="118" font-weight="700" letter-spacing="-1" fill="#F2F3F5">
+    ARATI PATIL
+  </text>
+  <text x="96" y="430" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700" fill="#C6FF4D">
+    BUILD. LEAD. CREATE.
+  </text>
+  <text x="96" y="520" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#9AA1A9">
+    B.Tech CSBS · VTU Belagavi
+  </text>
+</svg>

@@ -1,0 +1,2319 @@
+/* Component styles. Tokens live in tokens.css, layout helpers in
+   utilities.css. Section rhythms vary on purpose — do not flatten every
+   section into the same repeated card grid. */
+
+/* ---------- Reveal (IntersectionObserver-driven) ----------
+   idle  = visible default (content shows if JS/observer fails)
+   armed = hidden, set only while an active observer owns the element
+   in    = revealed
+   Variants: rise (default) · mask (wipe, headings/imagery) · scale (small
+   elements) · rule (draw-in accent lines, transform-origin left). */
+.reveal--armed,
+.reveal--in {
+  transition:
+    opacity var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms),
+    clip-path var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal--rise.reveal--armed {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.reveal--rise.reveal--in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mask clips its content, not the observed element (a fully clipped element
+   is treated as non-intersecting). Negative insets at rest so the wipe region
+   always exceeds the box and never clips glyph overhang once settled. */
+.reveal__mask {
+  display: block;
+  transition: clip-path var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal--mask.reveal--armed .reveal__mask {
+  clip-path: inset(0 0 100% 0);
+}
+
+.reveal--mask.reveal--in .reveal__mask {
+  clip-path: inset(-15% -5% -25% -5%);
+}
+
+.reveal--scale.reveal--armed {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.reveal--scale.reveal--in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal--rule {
+  transform-origin: left center;
+}
+
+.reveal--rule.reveal--armed {
+  opacity: 1;
+  transform: scaleX(0);
+}
+
+.reveal--rule.reveal--in {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal--rise.reveal--armed,
+  .reveal--mask.reveal--armed,
+  .reveal--scale.reveal--armed,
+  .reveal--rule.reveal--armed {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal--mask.reveal--armed .reveal__mask {
+    clip-path: none;
+  }
+}
+
+/* ---------- Site navigation ---------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: var(--border);
+}
+
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: var(--nav-height);
+}
+
+.site-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-display);
+}
+
+.site-nav__monogram {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: var(--fs-caption);
+  letter-spacing: 0;
+}
+
+.site-nav__brand-text {
+  font-size: var(--fs-small);
+}
+
+.site-nav__desktop {
+  display: none;
+}
+
+.site-nav__list {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.site-nav__list a {
+  position: relative;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.site-nav__list a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.4rem;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.site-nav__list a:hover,
+.site-nav__list a:focus-visible,
+.site-nav__list a[data-active] {
+  color: var(--text);
+}
+
+.site-nav__list a:hover::after,
+.site-nav__list a:focus-visible::after,
+.site-nav__list a[data-active]::after {
+  transform: scaleX(1);
+}
+
+/* Mobile toggle + panel */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.nav-toggle__bars,
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  background: var(--text);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.nav-toggle__bars {
+  position: relative;
+}
+
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.nav-toggle__bars::before {
+  top: -6px;
+}
+
+.nav-toggle__bars::after {
+  top: 6px;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bars {
+  background: transparent;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bars::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bars::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: var(--nav-height) 0 0 0;
+  z-index: 40;
+  overflow-y: auto;
+  background: var(--bg);
+  padding: var(--space-8) var(--gutter);
+}
+
+.mobile-menu__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-menu__list a {
+  display: block;
+  padding: var(--space-4) 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+  border-bottom: var(--border);
+}
+
+.mobile-menu__list a:hover,
+.mobile-menu__list a:focus-visible,
+.mobile-menu__list a[data-active] {
+  color: var(--accent);
+}
+
+@media (min-width: 768px) {
+  .site-nav__desktop {
+    display: block;
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* ---------- Section rhythm ---------- */
+.section--alt {
+  background: var(--bg-2);
+}
+
+.section__block {
+  position: relative;
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* ---------- Hero ----------
+   Typography-led and editorial. The name is the centerpiece; the three
+   "chapters" (Build / Lead / Create) form a staggered index that leads the
+   eye down into the Work section. */
+.hero {
+  position: relative;
+  /* clip (not hidden): paints identically but does NOT make .hero a scroll
+     container, which would deactivate view() timelines for its children. */
+  overflow: clip;
+  display: flex;
+  align-items: center;
+  min-height: min(86vh, 50rem);
+  padding-block: clamp(4rem, 11vh, 7.5rem) clamp(3rem, 7vh, 5rem);
+}
+
+.hero__grid {
+  width: 100%;
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+  align-items: end;
+}
+
+.hero__lead {
+  display: grid;
+  gap: var(--space-6);
+  align-content: end;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--muted);
+}
+
+.hero__eyebrow::before {
+  content: '';
+  width: 1.75rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero__title {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-hero);
+  text-transform: uppercase;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+/* Editorial asymmetry: offset the second line of the name so the two words
+   stagger rather than stack flat. Wide viewports only — narrow screens keep
+   a clean stacked lockup. */
+@media (min-width: 768px) {
+  .hero__title-line:nth-child(2) {
+    padding-inline-start: clamp(1rem, 8vw, 6rem);
+  }
+}
+
+.hero__descriptor {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  max-width: 34ch;
+}
+
+.hero__intro {
+  color: var(--muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* The signature motif: three staggered chapter entries. */
+.hero__chapters {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  align-content: end;
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.chapter::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.chapter__word {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--ls-display);
+  white-space: nowrap;
+}
+
+.chapter__rule {
+  height: 1px;
+  background: var(--line);
+  transform-origin: left center;
+}
+
+/* Staircase rhythm: each movement sits a little further in. */
+.chapter:nth-child(2) {
+  margin-left: var(--space-6);
+}
+
+.chapter:nth-child(3) {
+  margin-left: var(--space-12);
+}
+
+/* A single restrained lime marker on the first movement. */
+.chapter:nth-child(1)::before {
+  background: var(--accent);
+}
+
+.chapter:nth-child(1) .chapter__word {
+  color: var(--accent);
+}
+
+.chapter:nth-child(1) .chapter__rule {
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+/* Bottom hairline hands off to the Work section. */
+.hero__divider {
+  display: block;
+  position: relative;
+  height: 1px;
+  background: var(--line);
+}
+
+.hero__divider::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 4rem;
+  background: var(--accent);
+}
+
+@media (min-width: 1024px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.5fr) minmax(17rem, 1fr);
+    grid-template-areas: 'lead chapters';
+    column-gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .hero__lead {
+    grid-area: lead;
+  }
+
+  .hero__chapters {
+    grid-area: chapters;
+  }
+
+  .hero__divider {
+    grid-column: 1 / -1;
+  }
+
+  .chapter__rule {
+    min-width: 3rem;
+  }
+}
+
+/* Motion is owned by GSAP (see src/components/sections/Hero.tsx). The base
+   styles above are already the final, visible state, so the hero renders
+   correctly without JavaScript or under reduced motion — GSAP only layers the
+   entrance and exit on top. */
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-small);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+}
+
+/* ---------- Section heading ---------- */
+.section-heading {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.section-heading__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.section-heading__index {
+  color: var(--muted);
+}
+
+.section-heading__rule {
+  align-self: center;
+  width: 2.25rem;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.section-heading__title {
+  font-size: var(--fs-section);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  margin-top: var(--space-2);
+}
+
+.section-heading__lede {
+  color: var(--muted);
+}
+
+/* Editorial masthead: at wide viewports the title and lede sit side by side,
+   bottom-aligned, with the eyebrow spanning both columns. Used on a few
+   sections so the page has editorial rhythm instead of one repeated stack. */
+@media (min-width: 1024px) {
+  .section-heading--split {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 6vw, 5rem);
+    align-items: end;
+  }
+
+  .section-heading--split .section-heading__eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .section-heading--split .section-heading__lede {
+    margin-bottom: 0.35em;
+  }
+}
+
+/* ---------- Unverified-detail flag ---------- */
+.flag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  color: var(--muted);
+  border-left: 2px solid var(--line-strong);
+  padding-left: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+/* ---------- Work ----------
+   Image-led features that alternate sides, plus compact index rows for
+   secondary projects. Deliberately not a uniform card grid. */
+.work-features {
+  display: grid;
+  gap: clamp(3.5rem, 9vw, 8rem);
+}
+
+.project {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+
+.project__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  transition: border-color var(--dur-base) var(--ease-out);
+}
+
+/* Wrapper is over-sized (116%) so the image can drift vertically inside the
+   frame without exposing an edge. GSAP parallax targets this wrapper, leaving
+   the CSS hover zoom on .project__shot below untouched. */
+.project__shot-wrap {
+  position: absolute;
+  inset: -8% 0;
+  display: block;
+  will-change: transform;
+}
+
+.project__shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.project:hover .project__shot,
+.project:focus-within .project__shot {
+  transform: scale(1.03);
+}
+
+.project:hover .project__media,
+.project:focus-within .project__media {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
+}
+
+/* Pointer-reactive overlay that echoes each project's subject; purely
+   decorative, so it never intercepts input or hides the real screenshot. */
+.project__field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+
+.project__info {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.project__index {
+  color: var(--muted);
+}
+
+.project__ownership {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.project__name {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+}
+
+.project__summary {
+  color: var(--text);
+}
+
+.project__contribution {
+  color: var(--muted);
+  max-width: var(--measure);
+}
+
+.project__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--space-1);
+}
+
+.project__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  color: var(--muted);
+}
+
+.project__tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.project__tags li + li::before {
+  content: '';
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.project__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-top: var(--space-2);
+}
+
+.project__link {
+  font-size: var(--fs-small);
+  color: var(--accent);
+  padding-bottom: 1px;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.project__link:hover,
+.project__link:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
+@media (min-width: 1024px) {
+  .project {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+    align-items: center;
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .project--reverse .project__media {
+    order: 2;
+  }
+
+  .project__name {
+    font-size: var(--fs-display);
+  }
+}
+
+/* Compact index rows for secondary projects. */
+.work-index {
+  display: grid;
+  margin-top: clamp(3rem, 7vw, 6rem);
+  border-top: var(--border);
+}
+
+.work-index__item {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-8);
+  border-bottom: var(--border);
+}
+
+.work-index__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.work-index__name {
+  font-size: var(--fs-h2);
+}
+
+.work-index__summary {
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .work-index__item {
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    column-gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .work-index__meta {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .work-index__name,
+  .work-index__summary,
+  .work-index__ownership,
+  .work-index__item .flag {
+    grid-column: 2;
+  }
+}
+
+/* ---------- Achievements ----------
+   Editorial hierarchy: one lead recognition, a distinct secondary entry set
+   off by a rule, then compact minor rows. Team vs solo is stated in words, so
+   colour is never the only signal. */
+.achievements {
+  display: grid;
+  gap: clamp(2.75rem, 7vw, 5rem);
+}
+
+.achievement__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.achievement__index {
+  color: var(--muted);
+}
+
+.achievement__title {
+  margin-top: var(--space-3);
+  letter-spacing: var(--ls-display);
+}
+
+.achievement__scope {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.achievement__scope::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+/* A single restrained lime marker distinguishes team from solo. */
+.achievement--team .achievement__scope::before {
+  background: var(--accent);
+}
+
+.achievement__detail {
+  max-width: var(--measure);
+  color: var(--muted);
+  margin-top: var(--space-4);
+}
+
+/* Lead — the most prominent recognition. */
+.achievement--lead {
+  max-width: 46rem;
+}
+
+.achievement--lead .achievement__title {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+}
+
+/* Secondary — distinct, set apart by a hairline rule. */
+.achievement--secondary {
+  border-top: var(--border);
+  padding-top: clamp(2rem, 5vw, 3rem);
+  max-width: 46rem;
+}
+
+.achievement--secondary .achievement__title {
+  font-size: var(--fs-h2);
+}
+
+/* Minor — compact supporting recognition. */
+.achievement-minor {
+  display: grid;
+  gap: var(--space-6);
+  border-top: var(--border);
+  padding-top: clamp(1.5rem, 4vw, 2.5rem);
+  list-style: none;
+}
+
+.achievement--minor .achievement__title {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+}
+
+.achievement--minor .achievement__detail {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Leadership / roles ----------
+   An editorial timeline: one hairline rail with node markers, stacked role
+   entries, and a mono meta line (category / date). Deliberately distinct from
+   the Achievements blocks. */
+.role-timeline {
+  --rail-gap: clamp(1.5rem, 4vw, 2.75rem);
+  position: relative;
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  padding-left: var(--rail-gap);
+  border-left: var(--border);
+  list-style: none;
+}
+
+/* Lime rail drawn over the hairline as the list enters. A real element (not a
+   pseudo) so GSAP can scrub its scaleY. Base = drawn, so reduced motion and
+   no-JS see it complete. */
+.role-timeline__rail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform-origin: top center;
+  transform: scaleY(1);
+}
+
+.role-entry {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* Node marker centred on the rail. */
+.role-entry::before {
+  content: '';
+  position: absolute;
+  top: 0.55em;
+  left: calc(-1 * var(--rail-gap) - 4.5px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+/* A single restrained lime marker for roles held now. */
+.role-entry--current::before {
+  background: var(--accent);
+}
+
+.role-entry__meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.role-entry__sep {
+  color: var(--line-strong);
+}
+
+.role-entry__title {
+  font-size: var(--fs-h3);
+  letter-spacing: var(--ls-display);
+}
+
+.role-entry__org {
+  color: var(--muted);
+}
+
+.role-entry__detail {
+  max-width: var(--measure);
+  color: var(--muted);
+  margin-top: var(--space-1);
+}
+
+/* ---------- About ----------
+   Editorial two-column: a lead paragraph and supporting prose on one side, a
+   hairline-ruled fact list on the other. Intentionally not a card/box. */
+.about-grid {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.about__prose {
+  display: grid;
+  gap: var(--space-4);
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.about__lead {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-display);
+  color: var(--text);
+}
+
+.about__facts {
+  display: grid;
+  gap: var(--space-6);
+  align-content: start;
+}
+
+.about__fact {
+  display: grid;
+  gap: var(--space-1);
+  border-top: var(--border);
+  padding-top: var(--space-4);
+}
+
+.about__fact:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.about__fact dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about__fact dd {
+  color: var(--text);
+}
+
+@media (min-width: 900px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* ---------- Skills ----------
+   An editorial index: one hairline-separated row per group, with a mono label
+   column and inline items. Deliberately not a card grid. */
+.skill-list {
+  display: grid;
+}
+
+.skill-group {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: var(--border);
+}
+
+.skill-group:last-child {
+  border-bottom: var(--border);
+}
+
+.skill-group__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.skill-group__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.skill-group__stage {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.skill-group__stage::before {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.skill-group__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+
+.skill-group__items li {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--ls-display);
+}
+
+.skill-group__note {
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .skill-group {
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: baseline;
+  }
+
+  .skill-group__note {
+    grid-column: 2;
+  }
+}
+
+/* ---------- Beyond tech ----------
+   The expressive finale: each creative practice is an oversized display
+   line, distinct from the facts list in About and the compact rows in
+   Skills. No imagery — typography and hairline rules carry the section. */
+.beyond-list {
+  display: grid;
+  list-style: none;
+}
+
+.beyond-entry {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: clamp(1.75rem, 4vw, 3rem);
+  border-top: var(--border);
+}
+
+.beyond-entry:last-child {
+  border-bottom: var(--border);
+}
+
+.beyond-entry__index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  color: var(--muted);
+}
+
+.beyond-entry__label {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+}
+
+.beyond-entry__note {
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .beyond-entry {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    column-gap: var(--space-6);
+  }
+
+  .beyond-entry__index {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .beyond-entry__label,
+  .beyond-entry__note {
+    grid-column: 2;
+  }
+}
+
+/* ---------- Contact ----------
+   Simple and decisive: one large email as the focal point, then quiet
+   profile links. No form, no availability promises. */
+.contact {
+  position: relative;
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  border-top: var(--border);
+  padding-top: clamp(2rem, 5vw, 3rem);
+}
+
+/* Contact finale: a dimmed copy of the hero signal resolves behind the email. */
+.contact__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.contact__signal {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.contact__email {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 6.5vw, 5rem);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-display);
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.contact__email:hover,
+.contact__email:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.contact__links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  list-style: none;
+}
+
+.contact__links a {
+  color: var(--muted);
+}
+
+.contact__links a:hover,
+.contact__links a:focus-visible {
+  color: var(--text);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: var(--border);
+  padding-block: var(--space-16);
+  margin-top: var(--space-24);
+}
+
+.site-footer__inner {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.site-footer__concept {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--ls-display);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.site-footer__links a {
+  color: var(--muted);
+}
+
+.site-footer__links a:hover,
+.site-footer__links a:focus-visible {
+  color: var(--accent);
+}
+
+/* ---------- Tier 2 motion ----------
+   Progressive enhancement only. Every base rule below is already the FINAL,
+   visible state, so browsers without CSS scroll-driven animations and
+   reduced-motion users get the finished layout. Scroll-linked and continuous
+   animation is opted into inside @supports + (prefers-reduced-motion:
+   no-preference) — never the default. No JS scroll listeners are used, so
+   there is nothing to hijack or jank. */
+
+/* Marquee: Build · Lead · Create. */
+.marquee {
+  overflow: hidden;
+  border-block: var(--border);
+  padding-block: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+/* GSAP skews this wrapper by scroll velocity; kept separate from the track so
+   it never fights the CSS translate loop. */
+.marquee__inner {
+  will-change: transform;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 36s linear infinite;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+}
+
+.marquee__item {
+  display: flex;
+  align-items: center;
+}
+
+.marquee__word {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-inline: clamp(1.5rem, 4vw, 3rem);
+}
+
+.marquee__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion: stop the loop, show one centred static row. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .marquee__group:last-child {
+    display: none;
+  }
+}
+
+/* Scene transition band: a quiet outlined movement word between major scenes
+   (Lead, Create). Decorative; base state is the finished, visible layout. */
+.scene-band {
+  padding-block: clamp(2rem, 6vw, 4.5rem);
+}
+
+.scene-band__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.scene-band__word {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-display);
+  letter-spacing: var(--ls-display);
+  line-height: 1;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+}
+
+.scene-band__rule {
+  flex: 1;
+  height: 1px;
+  background: var(--line-strong);
+  transform-origin: left center;
+}
+
+/* Nav scroll-progress hairline (base = empty; filled only where scroll-driven
+   animation is available and motion is welcome). */
+.site-nav__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Scroll-driven hero exit, nav progress, project wipe and rail draw are now
+   owned by GSAP ScrollTrigger (see src/components/sections/*, src/motion/*),
+   so the CSS @supports(animation-timeline) block was removed to avoid the two
+   engines fighting over the same transforms. The base rules above remain the
+   final visible state. */
+
+/* ---------- Hero: cinematic layers + type ---------- */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Fine grid, faded toward the edges so it reads as depth, not a table. */
+.hero__bg-grid {
+  position: absolute;
+  inset: -12% -6%;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 84px 84px;
+  -webkit-mask-image: radial-gradient(120% 90% at 72% 18%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(120% 90% at 72% 18%, #000 0%, transparent 72%);
+  opacity: 0.65;
+  will-change: transform;
+}
+
+/* Two soft colour fields that drift slowly. Static under reduced motion
+   (the global reduced-motion rule collapses the animation). */
+.hero__bg-glow {
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(
+      38% 46% at 78% 22%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      44% 52% at 10% 80%,
+      color-mix(in srgb, #5b8cff 15%, transparent) 0%,
+      transparent 72%
+    );
+  filter: blur(8px);
+  will-change: transform;
+  animation: hero-glow-drift 22s ease-in-out infinite alternate;
+}
+
+/* Subtle film grain. */
+.hero__bg-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes hero-glow-drift {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.08);
+  }
+}
+
+/* Pointer-reactive particle field (canvas, decorative). Fills the hero
+   background box above the grid/glow layers; the loop only runs while the
+   hero is on screen and the tab is visible (see useCanvasScene). */
+.hero__signal {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Name: each line is an overflow-hidden mask; characters slide up into it. */
+.hero__title-line {
+  display: block;
+}
+
+.hero__title-mask {
+  display: block;
+  overflow: hidden;
+  /* small padding so ascenders/descenders are never shaved by the clip */
+  padding-block: 0.06em 0.12em;
+  margin-block: -0.06em -0.12em;
+}
+
+.hero__char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Page-entry curtain: hidden at rest (so no-JS/reduced-motion show the hero);
+   GSAP covers then wipes it up before the first paint. */
+.hero__curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--bg);
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+/* ---------- Custom cursor (desktop, fine pointer only) ----------
+   Rendered by <Cursor/>; only visible once JS adds `.has-cursor` to <html>
+   under (pointer: fine) + no-reduced-motion. Never intercepts input — the
+   element is pointer-events: none, so clicks/selection/focus are unaffected. */
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    width var(--dur-base) var(--ease-out),
+    height var(--dur-base) var(--ease-out);
+}
+
+html.has-cursor .cursor {
+  opacity: 1;
+}
+
+/* Hide the native pointer only while the custom cursor is active. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role='button'] {
+  cursor: none;
+}
+
+.cursor.is-active {
+  width: 70px;
+  height: 70px;
+}
+
+.cursor__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.cursor.is-active .cursor__label {
+  opacity: 1;
+}
+
+/* Touch/coarse pointers never get the cursor layer. */
+@media (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}
+
+/* ---------- Experience: orbital sculpture (Leadership) ----------
+   Signature interactive scene. The rings are decorative (aria-hidden); the
+   nodes are real buttons. Mobile shows the chips; desktop overlays them on the
+   rotating rings. Nothing here is hidden from keyboard or screen readers. */
+.sculpture {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: center;
+}
+
+.sculpture__canvas {
+  position: relative;
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.sculpture__stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: none; /* mobile: rings hidden, chips are the interface */
+}
+
+.sculpture__stage-inner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  will-change: transform;
+}
+
+.sculpture__orbits {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sculpture__orbit ellipse {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 0.4;
+}
+
+.sculpture__orbit--b ellipse {
+  stroke: var(--line);
+}
+
+.sculpture__link {
+  stroke: var(--line-strong);
+  stroke-width: 0.35;
+  transition: stroke var(--dur-base) var(--ease-out),
+    stroke-width var(--dur-base) var(--ease-out);
+}
+
+.sculpture__link--lead {
+  stroke-dasharray: 1.5 1.6;
+}
+
+.sculpture__link[data-active='true'] {
+  stroke: var(--accent);
+  stroke-width: 0.7;
+}
+
+.sculpture__core {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  gap: 0.1rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: radial-gradient(circle at 50% 40%, var(--surface), var(--bg));
+  box-shadow: 0 0 70px -14px var(--signal-glow);
+}
+
+.sculpture__core-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.sculpture__core-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sculpture__nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 3;
+}
+
+.sculpture__node {
+  list-style: none;
+}
+
+.sculpture__node-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-small);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.sculpture__node-btn:hover {
+  border-color: var(--accent);
+}
+
+.sculpture__node-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.sculpture__node--lead .sculpture__node-dot {
+  background: var(--accent);
+}
+
+.sculpture__node.is-active .sculpture__node-btn {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.sculpture__node.is-active .sculpture__node-dot {
+  box-shadow: 0 0 0 4px var(--signal-soft);
+}
+
+.sculpture__panel {
+  min-height: 8rem;
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--line);
+}
+
+.sculpture__panel-kind {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.sculpture__panel-title {
+  margin-top: 0.35rem;
+  font-size: var(--fs-h3);
+}
+
+.sculpture__panel-org {
+  color: var(--text);
+}
+
+.sculpture__panel-meta {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  color: var(--muted);
+}
+
+.sculpture__panel-detail,
+.sculpture__panel-hint {
+  margin-top: 0.6rem;
+  color: var(--muted);
+}
+
+.sculpture__panel-link {
+  display: inline-flex;
+  gap: 0.35em;
+  margin-top: 0.75rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.sculpture__panel-link:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .sculpture {
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 21rem);
+  }
+
+  .sculpture__canvas {
+    max-width: none;
+    grid-column: 1;
+  }
+
+  .sculpture__stage {
+    display: block;
+  }
+
+  .sculpture__nodes {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .sculpture__node {
+    position: absolute;
+    left: var(--nx);
+    top: var(--ny);
+    transform: translate(-50%, -50%);
+  }
+
+  .sculpture__node-btn {
+    padding: 0.35rem 0.7rem;
+    font-size: var(--fs-caption);
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .sculpture__node-btn:hover {
+    transform: none;
+    background: var(--surface);
+  }
+
+  .sculpture__panel {
+    grid-column: 2;
+  }
+}
+
+/* Scroll-reactive leadership timeline: the entry crossing the reader lights up. */
+.role-entry[data-active]::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--signal-soft);
+}
+
+.role-entry[data-active] .role-entry__title {
+  color: var(--accent);
+}
+
+/* Live telemetry readout (desktop only; decorative, aria-hidden). */
+.telemetry {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .telemetry {
+    position: fixed;
+    left: var(--gutter);
+    bottom: var(--gutter);
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .telemetry__row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .telemetry__key {
+    color: var(--accent);
+  }
+}
+
+/* Skills constellation (enhancement; the list is the fallback). */
+.constellation {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.constellation__stage {
+  position: relative;
+  width: min(100%, 34rem);
+  margin-inline: auto;
+  aspect-ratio: 1;
+}
+
+.constellation__links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.constellation__links line {
+  stroke: var(--line-strong);
+  stroke-width: 0.4;
+  transition: stroke 0.3s ease;
+}
+
+.constellation__links line.is-active {
+  stroke: var(--accent);
+}
+
+.constellation__hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  gap: 0.15rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--signal-line);
+  background: radial-gradient(circle at 50% 50%, var(--surface-2), var(--bg));
+  box-shadow: 0 0 44px -8px var(--signal-glow);
+}
+
+.constellation__hub-mark {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.constellation__hub-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.constellation__nodes {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.constellation__node {
+  position: absolute;
+  left: var(--nx);
+  top: var(--ny);
+  transform: translate(-50%, -50%);
+}
+
+.constellation__node-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.constellation__node-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.constellation__node--category .constellation__node-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-mono);
+  color: var(--muted);
+}
+
+.constellation__node--learning .constellation__node-dot {
+  background: transparent;
+  border: 1px solid var(--accent);
+}
+
+.constellation__node-btn:hover,
+.constellation__node-btn:focus-visible {
+  border-color: var(--line-strong);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.constellation__node-btn[aria-pressed='true'] {
+  border-color: var(--signal-line);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  color: var(--text);
+}
+
+.constellation__node-btn[aria-pressed='true'] .constellation__node-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--signal-soft);
+}
+
+.constellation__panel {
+  border-top: var(--border);
+  padding-top: clamp(1rem, 3vw, 1.5rem);
+}
+
+.constellation__panel-kind {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.constellation__panel-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+}
+
+.constellation__panel-meta {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.constellation__panel-note,
+.constellation__panel-hint {
+  margin: 0.6rem 0 0;
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.constellation__panel-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+}
+
+.constellation__panel-items li::before {
+  content: '\00b7  ';
+  color: var(--accent);
+}
+
+
+/* =====================================================================
+   Experience: command palette, nav search, easter egg
+   ===================================================================== */
+
+/* Custom cursor must yield to real text inputs (inherited cursor:none would
+   otherwise hide the caret affordance inside fields). */
+html.has-cursor input,
+html.has-cursor textarea,
+html.has-cursor select {
+  cursor: text;
+}
+
+/* While the palette is open it lives in the top layer, above the custom
+   cursor element — so hide the dot and restore the native pointer. */
+html.has-palette .cursor {
+  opacity: 0;
+}
+
+html.has-palette,
+html.has-palette a,
+html.has-palette button,
+html.has-palette [role='button'],
+html.has-palette input {
+  cursor: auto;
+}
+
+html.has-palette .palette__input {
+  cursor: text;
+}
+
+/* --- Nav search trigger (desktop) --- */
+.site-nav__search {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.site-nav__search:hover,
+.site-nav__search:focus-visible {
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+.site-nav__kbd {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--accent);
+  background: var(--signal-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.35rem;
+}
+
+@media (min-width: 768px) {
+  .site-nav__search {
+    display: inline-flex;
+  }
+}
+
+/* 768–1023px: brand + full nav + search is tight, so drop the decorative
+   shortcut chip and tighten link spacing to avoid horizontal overflow. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-nav__list {
+    gap: var(--space-4);
+  }
+
+  .site-nav__kbd {
+    display: none;
+  }
+}
+
+/* --- Mobile search entry (mirrors the menu links) --- */
+.mobile-menu__search {
+  display: block;
+  width: 100%;
+  padding: var(--space-4) 0;
+  border: 0;
+  border-bottom: var(--border);
+  background: transparent;
+  text-align: left;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+}
+
+.mobile-menu__search:hover,
+.mobile-menu__search:focus-visible {
+  color: var(--accent);
+}
+
+/* --- Command palette --- */
+.palette {
+  width: 100%;
+  max-width: min(38rem, calc(100vw - 2 * var(--gutter)));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.palette::backdrop {
+  background: color-mix(in srgb, #000 62%, transparent);
+  backdrop-filter: blur(3px);
+}
+
+.palette__box {
+  display: flex;
+  flex-direction: column;
+  max-height: min(30rem, 72vh);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85);
+}
+
+.palette__search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.palette__prompt {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+
+.palette__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+}
+
+.palette__input::placeholder {
+  color: var(--muted);
+}
+
+.palette__kbd {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.15rem 0.4rem;
+}
+
+.palette__list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+}
+
+.palette__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.palette__item[data-active] {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.palette__item-label {
+  font-size: var(--fs-body);
+}
+
+.palette__item-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.palette__item-group {
+  color: var(--accent);
+}
+
+.palette__empty {
+  padding: 1.2rem 1rem;
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+.palette__footer {
+  display: flex;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* --- Easter egg --- */
+.signal-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-left: 0.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--line-strong);
+  vertical-align: middle;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.signal-dot:hover,
+.signal-dot:focus-visible {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--signal-soft);
+}
+
+.egg {
+  position: fixed;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  z-index: 180;
+  width: min(22rem, calc(100vw - 2 * var(--gutter)));
+  padding: 1rem 2rem 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8);
+}
+
+.egg__eyebrow {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.egg__text {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--text);
+}
+
+.egg__close {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.5rem;
+  padding: 0 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.egg__close:hover,
+.egg__close:focus-visible {
+  color: var(--text);
+}
