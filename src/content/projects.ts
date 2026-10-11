@@ -116,6 +116,26 @@ export const projects: readonly Project[] = [
     featured: true,
   },
   {
+    id: 'abtalks',
+    name: 'ABTalks',
+    ownership: 'team',
+    context: '60-day coding challenge · Team Codexmatrix',
+    category: 'Learning platform',
+    summary:
+      'A 60-day coding challenge platform that helps Indian college students build ' +
+      'consistent habits through daily tasks, streaks, progress tracking, and ' +
+      'public proof-of-work submissions.',
+    contribution: 'Deployment & QA.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Zod'],
+    live: 'https://codexmatrix-redesign-abtalks.lovable.app/',
+    repo: 'https://github.com/nidzzgotnochill/codexmatrix-redesign-abtalks',
+    image: '/projects/abtalks.webp',
+    imageAlt:
+      'ABTalks landing page — a 60-day coding challenge with the headline ' +
+      '“Code daily for 60 days. Make it impossible to ignore.”',
+    featured: true,
+  },
+  {
     id: 'your-home-in-space',
     name: 'Your Home in Space',
     ownership: 'team',
